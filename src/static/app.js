@@ -4,6 +4,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
+  // Function to render participants for an activity
+  function renderParticipants(activity, participants) {
+    const participantsSection = document.createElement("div");
+    participantsSection.className = "participants";
+
+    const title = document.createElement("h5");
+    title.textContent = "Participants";
+    participantsSection.appendChild(title);
+
+    const list = document.createElement("ul");
+    participants.forEach((participant) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = participant;
+      list.appendChild(listItem);
+    });
+    participantsSection.appendChild(list);
+
+    activity.appendChild(participantsSection);
+  }
+
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
@@ -26,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
         `;
+
+        // Render participants section
+        renderParticipants(activityCard, details.participants);
 
         activitiesList.appendChild(activityCard);
 
